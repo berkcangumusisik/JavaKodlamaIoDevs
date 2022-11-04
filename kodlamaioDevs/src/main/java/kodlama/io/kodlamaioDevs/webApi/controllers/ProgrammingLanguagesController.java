@@ -1,7 +1,11 @@
 package kodlama.io.kodlamaioDevs.webApi.controllers;
 
 import kodlama.io.kodlamaioDevs.business.abstracts.ProgrammingLanguageService;
-import kodlama.io.kodlamaioDevs.entities.concretes.ProgrammingLanguage;
+import kodlama.io.kodlamaioDevs.business.requests.programmingLanguageRequests.CreateProgrammingLanguageRequest;
+import kodlama.io.kodlamaioDevs.business.requests.programmingLanguageRequests.DeleteProgrammingLanguageRequest;
+import kodlama.io.kodlamaioDevs.business.requests.programmingLanguageRequests.UpdateProgrammingLanguageRequest;
+import kodlama.io.kodlamaioDevs.business.responses.programminglanguageresponses.GetAllProgrammingLanguageResponse;
+import kodlama.io.kodlamaioDevs.business.responses.programminglanguageresponses.GetByIdProgrammingLanguageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,28 +22,27 @@ public class ProgrammingLanguagesController {
     }
 
     @GetMapping("/getall")
-    public List<ProgrammingLanguage> getAll(){
-            return this.programmingLanguageService.getAll();
+    public List<GetAllProgrammingLanguageResponse> getAll(){
+            return programmingLanguageService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ProgrammingLanguage getById(@PathVariable(name = "id") int id) throws Exception {
-        return this.programmingLanguageService.getById(id);
+    public GetByIdProgrammingLanguageResponse getById(int id){
+        return programmingLanguageService.getById(id);
     }
 
     @PostMapping
-    public void add(@RequestBody ProgrammingLanguage programmingLanguage) throws Exception {
-        this.programmingLanguageService.add(programmingLanguage);
+    public void add( CreateProgrammingLanguageRequest createProgrammingLanguageRequest) {
+        this.programmingLanguageService.add(createProgrammingLanguageRequest);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteById(@PathVariable(name = "id") int id) throws Exception {
-        programmingLanguageService.delete(id);
-        return "Programlama Dili Başarıyla Silindi";
+    public void deleteById(DeleteProgrammingLanguageRequest deleteProgrammingLanguageRequest){
+        programmingLanguageService.delete(deleteProgrammingLanguageRequest);
     }
 
     @PutMapping("/{id}")
-    public void updateById(@PathVariable int id, @RequestBody ProgrammingLanguage programmingLanguage) throws Exception {
-        programmingLanguageService.update(programmingLanguage,id);
+    public void updateById(int id, UpdateProgrammingLanguageRequest updateProgrammingLanguageRequest) {
+        programmingLanguageService.update(id,updateProgrammingLanguageRequest);
     }
 }
